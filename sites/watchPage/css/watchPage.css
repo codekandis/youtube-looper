@@ -1,0 +1,17 @@
+@charset "utf-8";
+
+.ytp-autonav-toggle-button[aria-checked='true'] {
+	background-image: url('../images/youtubeButtonBackground.svg');
+}
+
+.codekandis-repeatButtonContainer {
+	margin-left: 15px;
+}
+
+.codekandis-repeatButton[aria-checked='false']::after {
+	background-image: url('../images/youtubeButtonNormal.svg') !important;
+}
+
+.codekandis-repeatButton[aria-checked='true']::after {
+	background-image: url('../images/youtubeButtonRepeat.svg') !important;
+}

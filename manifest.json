@@ -10,5 +10,27 @@
 		"48": "images/icon-48.png",
 		"64": "images/icon-64.png",
 		"128": "images/icon-128.png"
-	}
+	},
+	"permissions": [
+		"storage"
+	],
+	"content_scripts": [
+		{
+			"matches": [
+				"https://www.youtube.com/watch?*"
+			],
+			"js": [
+				"library/scripts/Object.js",
+				"library/scripts/DomHelper.js",
+				"library/scripts/Settings.js",
+				"library/scripts/VideoRepeater.js",
+				"sites/watchPage/scripts/RepeatButton.js",
+				"sites/watchPage/scripts/WatchPage.js",
+				"sites/watchPage/scripts/index.js"
+			],
+			"css": [
+				"sites/watchPage/css/watchPage.css"
+			]
+		}
+	]
 }
