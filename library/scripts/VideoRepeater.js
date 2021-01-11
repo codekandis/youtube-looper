@@ -2,13 +2,11 @@ class VideoRepeater
 {
 	constructor( videoElement )
 	{
-		this._isRunning     = false;
-		this._timerInterval = 500;
-		this._videoEnded    = false;
-		this._videoElement  = videoElement;
+		this._isRunning    = false;
+		this._videoEnded   = false;
+		this._videoElement = videoElement;
 
 		this._attachVideoEventHandlers();
-		this._startTimer();
 	}
 
 	get isRunning()
@@ -23,34 +21,27 @@ class VideoRepeater
 			( event ) =>
 			{
 				this._videoEnded = true;
+				this._playIfPossible();
 			}
 		);
 	}
 
-	_startTimer()
+	_playIfPossible()
 	{
-		setInterval(
-			() =>
-			{
-				if ( true === this._isRunning )
-				{
-					if ( true === this._videoEnded )
-					{
-						this._videoElement.play();
-						this._videoEnded = false;
-					}
-				}
-			},
-			this._timerInterval
-		);
+		if ( true === this._videoEnded && true === this._isRunning )
+		{
+			this._videoElement.play();
+			this._videoEnded = false;
+		}
 	}
 
-	async toggle( )
+	async toggle()
 	{
 		return await new Promise(
 			( resolveHandler, rejectHandler ) =>
 			{
 				this._isRunning = !this._isRunning;
+				this._playIfPossible();
 				resolveHandler( this );
 			}
 		);
