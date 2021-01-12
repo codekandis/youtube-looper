@@ -1,6 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 17" width="100%" height="100%">
 	<circle cx="8.5" cy="8.5" r="8" stroke="#000" stroke-width="1" stroke-opacity="0.15"/>
-	<circle cx="8.5" cy="8.5" r="7.5" fill="#fff"/>
-	<path d="M 11.454423259036624 9.02094453300079 A 3 3 0 1 0 10.621320343559642 10.621320343559642" stroke="#717171" stroke-width="2"/>
-	<polygon points="9.5,8.5 13.5,8.5 11.5,10.5" fill="#717171"/>
+	<circle cx="8.5" cy="8.5" r="7.5" fill="#ffffff"/>
+	<path d="M 7.999999999999999 6 A 2.5 2.5 0 0 0 5.5 8.5" stroke="#717171" stroke-width="2"/>
+	<polygon points="7.969,5 9,5 9,3 12,6 9,9 9,7 7.969,7" fill="#717171"/>
+	<path d="M 9 11 A 2.5 2.5 0 0 0 11.5 8.5" stroke="#717171" stroke-width="2"/>
+	<polygon points="5,11 8,8 8,10 9.031,10 9.031,12 8,12 8,14" fill="#717171"/>
 </svg>
