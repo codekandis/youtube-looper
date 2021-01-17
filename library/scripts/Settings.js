@@ -2,7 +2,9 @@ class Settings
 {
 	constructor()
 	{
-		this._settings = {};
+		this._settings = {
+			loopedVideos: []
+		};
 	}
 
 	has( name )
@@ -22,24 +24,24 @@ class Settings
 
 	async load()
 	{
-		const loadHandler = ( resolvedHandler, storedSettings ) =>
-		{
-			storedSettings.forEach(
-				( name, value ) =>
-				{
-					if ( undefined !== this._settings[ name ] )
-					{
-						this._settings[ name ] = value;
-					}
-				}
-			);
-
-			resolvedHandler( this );
-		};
-
 		return await new Promise(
 			( resolveHandler, rejectHandler ) =>
 			{
+				const loadHandler = ( resolvedHandler, storedSettings ) =>
+				{
+					storedSettings.forEach(
+						( name, value ) =>
+						{
+							if ( undefined !== this._settings[ name ] )
+							{
+								this._settings[ name ] = value;
+							}
+						}
+					);
+
+					resolvedHandler( this );
+				};
+
 				browser
 					.storage
 					.local
