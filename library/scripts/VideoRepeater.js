@@ -1,8 +1,8 @@
 class VideoRepeater
 {
-	constructor( videoElement )
+	constructor( isRunning, videoElement )
 	{
-		this._isRunning    = false;
+		this._isRunning    = isRunning;
 		this._videoEnded   = false;
 		this._videoElement = videoElement;
 

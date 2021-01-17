@@ -6,6 +6,7 @@
 
 .codekandis-repeatButtonContainer {
 	margin-left: 15px;
+	margin-right: 15px;
 }
 
 .codekandis-repeatButton[aria-checked='false']::after {
