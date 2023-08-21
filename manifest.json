@@ -12,7 +12,8 @@
 		"128": "images/icon-128.png"
 	},
 	"permissions": [
-		"storage"
+		"storage",
+		"https://www.youtube.com/*"
 	],
 	"options_ui": {
 		"page": "optionsUi/templates/page.html",
