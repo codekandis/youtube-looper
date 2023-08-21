@@ -16,33 +16,7 @@ class PreferencesPage
 
 	_attachSettings()
 	{
-		document
-			.querySelectorAll( 'form fieldset [id]' )
-			.forEach(
-				( settingElement ) =>
-				{
-					const settingName = settingElement.getAttribute( 'id' );
-					if ( true === this._settings.has( settingName ) )
-					{
-						const settingValue = this._settings.get( settingName );
-						if ( true === Array.isArray( settingValue ) )
-						{
-							settingValue.forEach(
-								( fetchedSettingValue ) =>
-								{
-									settingElement.add(
-										DomHelper.createElementFromString( '<option>' + fetchedSettingValue + '</option>' )
-									)
-								}
-							);
-
-							return;
-						}
-
-						settingElement.value = settingValue;
-					}
-				}
-			);
+		this._appendLoopedVideos();
 	}
 
 	_addEventHandlersToPreferencesForm()
@@ -92,5 +66,47 @@ class PreferencesPage
 		this
 			._settings
 			.save();
+	}
+
+	_appendLoopedVideos()
+	{
+		const list = document.querySelector( '#loopedVideos' );
+
+		this._settings
+			.get( 'loopedVideos' )
+			.forEach(
+				( fetchedLoopedVideo ) =>
+				{
+					const listElement = DomHelper.createElementFromString( '<li><a href="' + fetchedLoopedVideo + '">' + fetchedLoopedVideo + '</a></li>' );
+					list.append( listElement );
+
+					window.fetch( fetchedLoopedVideo )
+						.then(
+							( response ) =>
+							{
+								return response.text()
+							}
+						)
+						.then(
+							( plainText ) =>
+							{
+								const domParser = new DOMParser();
+								const document  = domParser.parseFromString( plainText, 'text/html' );
+
+								const videoMetaData = document.querySelector( '#watch7-content' );
+								const artist        = videoMetaData
+									.querySelector( '[itemprop="author"] [itemprop="name"]' )
+									.getAttribute( 'content' );
+								const trackTitle    = videoMetaData
+									.querySelector( '[itemprop="name"]' )
+									.getAttribute( 'content' );
+
+								listElement
+									.querySelector( 'a' )
+									.textContent = artist + ' - ' + trackTitle;
+							}
+						);
+				}
+			);
 	}
 }
