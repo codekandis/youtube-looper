@@ -2,9 +2,9 @@
 
 class VideoRepeater
 {
-	constructor( isRunning, videoElement )
+	constructor( isLooped, videoElement )
 	{
-		this._isRunning    = isRunning;
+		this._isLooped     = isLooped;
 		this._videoEnded   = false;
 		this._videoElement = videoElement;
 
@@ -13,7 +13,7 @@ class VideoRepeater
 
 	get isRunning()
 	{
-		return this._isRunning;
+		return this._isLooped;
 	}
 
 	_attachVideoEventHandlers()
@@ -30,7 +30,7 @@ class VideoRepeater
 
 	_playIfPossible()
 	{
-		if ( true === this._videoEnded && true === this._isRunning )
+		if ( true === this._videoEnded && true === this._isLooped )
 		{
 			this._videoElement.play();
 			this._videoEnded = false;
@@ -42,7 +42,7 @@ class VideoRepeater
 		return await new Promise(
 			( resolveHandler, rejectHandler ) =>
 			{
-				this._isRunning = !this._isRunning;
+				this._isLooped = !this._isLooped;
 				this._playIfPossible();
 				resolveHandler( this );
 			}

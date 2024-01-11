@@ -2,17 +2,17 @@
 
 class RepeatButton
 {
-	constructor( settings, videoRepeater )
+	constructor( settings, isChecked, videoRepeater )
 	{
-		this._checked       = -1 !== settings.get( 'loopedVideos' ).indexOf( window.location.href );
 		this._settings      = settings;
+		this._isChecked     = isChecked;
 		this._videoRepeater = videoRepeater;
 		this._element       = this._createElement();
 	}
 
-	get checked()
+	get isChecked()
 	{
-		return this._checked;
+		return this._isChecked;
 	}
 
 	get element()
@@ -54,7 +54,7 @@ class RepeatButton
 	_createElement()
 	{
 		this._element = DomHelper.createElementFromString( '<button class="ytp-button codekandis-repeatButtonContainer" data-tooltip-target-id="codekandis-repeatButton"><div class="ytp-autonav-toggle-button-container"><div class="ytp-autonav-toggle-button codekandis-repeatButton"></div></div></button>' );
-		this._setButtonState( this._checked );
+		this._setButtonState( this._isChecked );
 		this._element.addEventListener(
 			'click',
 			( event ) =>
@@ -73,5 +73,10 @@ class RepeatButton
 		);
 
 		return this._element;
+	}
+
+	remove()
+	{
+		this._element.remove();
 	}
 }
