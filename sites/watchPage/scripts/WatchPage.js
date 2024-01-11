@@ -4,27 +4,45 @@ class WatchPage
 {
 	constructor( settings )
 	{
-		this._settings = settings;
+		this._videoElement  = null;
+		this._videoRepeater = null;
+		this._repeatButton  = null;
+		this._settings      = settings;
 	}
 
-	_addRepeatButton( videoElement )
+	_addRepeatButton()
 	{
-		const isLooped      = -1 !== this
+		const isLooped = -1 !== this
 			._settings
 			.get( 'loopedVideos' )
-			.indexOf( window.location.href )
-		const videoRepeater = new VideoRepeater( isLooped, videoElement );
-		const timeElement   = document.querySelector( '#movie_player .ytp-time-display' );
+			.indexOf( window.location.href );
+
+		this._videoRepeater = new VideoRepeater( isLooped, this._videoElement );
+		this._repeatButton  = new RepeatButton( this._settings, isLooped, this._videoRepeater );
+
+		const timeElement = document.querySelector( '#movie_player .ytp-time-display' );
 		timeElement
 			.parentNode
-			.insertBefore(
-				( new RepeatButton( this._settings, videoRepeater ) )
-					.element,
-				timeElement.nextSibling
-			);
+			.insertBefore( this._repeatButton.element, timeElement.nextSibling );
 	}
 
-	_waitForAddedVideoElement()
+	_removeRepeatButton()
+	{
+		if ( null !== this._repeatButton )
+		{
+			this._repeatButton.remove();
+		}
+
+		this._repeatButton = null;
+	}
+
+	_resetRepeatButton()
+	{
+		this._removeRepeatButton();
+		this._addRepeatButton();
+	}
+
+	_setupVideoElement()
 	{
 		const mutationHandler = ( mutations, mutationObserver ) =>
 		{
@@ -36,7 +54,9 @@ class WatchPage
 						{
 							if ( 'VIDEO' === addedNode.nodeName )
 							{
-								this._addRepeatButton( addedNode );
+								this._videoElement = addedNode;
+								this._videoElement.addEventListener( 'loadstart', this._video_loadStart );
+								this._addRepeatButton();
 							}
 						}
 					);
@@ -56,6 +76,11 @@ class WatchPage
 
 	execute()
 	{
-		this._waitForAddedVideoElement();
+		this._setupVideoElement();
 	}
+
+	_video_loadStart = ( event ) =>
+	{
+		this._resetRepeatButton();
+	};
 }
