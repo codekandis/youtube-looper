@@ -1,3 +1,5 @@
+'use strict';
+
 class DomHelper
 {
 	static createElementFromString( htmlString, idName = null, classNames = null )

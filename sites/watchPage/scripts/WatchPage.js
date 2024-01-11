@@ -1,3 +1,5 @@
+'use strict';
+
 class WatchPage
 {
 	constructor( settings )
@@ -5,13 +7,13 @@ class WatchPage
 		this._settings = settings;
 	}
 
-	_addRepeatButton()
+	_addRepeatButton( videoElement )
 	{
-		const videoRepeater = new VideoRepeater(
-			-1 !== this._settings.get( 'loopedVideos' ).indexOf( window.location.href ),
-			document
-				.querySelector( '#movie_player .html5-main-video' )
-		);
+		const isRunning     = -1 !== this
+			._settings
+			.get( 'loopedVideos' )
+			.indexOf( window.location.href )
+		const videoRepeater = new VideoRepeater( isRunning, videoElement );
 		const timeElement   = document.querySelector( '#movie_player .ytp-time-display' );
 		timeElement
 			.parentNode
@@ -19,12 +21,41 @@ class WatchPage
 				( new RepeatButton( this._settings, videoRepeater ) )
 					.element,
 				timeElement.nextSibling
-			)
-		;
+			);
+	}
+
+	_waitForAddedVideoElement()
+	{
+		const mutationHandler = ( mutations, mutationObserver ) =>
+		{
+			mutations.forEach(
+				( mutation ) =>
+				{
+					[ ...mutation.addedNodes ].forEach(
+						( addedNode ) =>
+						{
+							if ( 'VIDEO' === addedNode.nodeName )
+							{
+								this._addRepeatButton( addedNode );
+							}
+						}
+					);
+				}
+			);
+		};
+
+		const mutationObserver = new MutationObserver( mutationHandler );
+		mutationObserver.observe(
+			document,
+			{
+				subtree:   true,
+				childList: true
+			}
+		);
 	}
 
 	execute()
 	{
-		this._addRepeatButton();
+		this._waitForAddedVideoElement();
 	}
 }

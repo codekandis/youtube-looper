@@ -1,3 +1,5 @@
+'use strict';
+
 class VideoRepeater
 {
 	constructor( isRunning, videoElement )
