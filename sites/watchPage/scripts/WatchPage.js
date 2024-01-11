@@ -9,11 +9,11 @@ class WatchPage
 
 	_addRepeatButton( videoElement )
 	{
-		const isRunning     = -1 !== this
+		const isLooped      = -1 !== this
 			._settings
 			.get( 'loopedVideos' )
 			.indexOf( window.location.href )
-		const videoRepeater = new VideoRepeater( isRunning, videoElement );
+		const videoRepeater = new VideoRepeater( isLooped, videoElement );
 		const timeElement   = document.querySelector( '#movie_player .ytp-time-display' );
 		timeElement
 			.parentNode
