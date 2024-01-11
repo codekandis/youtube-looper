@@ -1,3 +1,5 @@
+'use strict';
+
 class WatchPage
 {
 	constructor( settings )

@@ -1,3 +1,5 @@
+'use strict';
+
 class RepeatButton
 {
 	constructor( settings, videoRepeater )
